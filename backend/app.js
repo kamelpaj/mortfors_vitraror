@@ -1,5 +1,6 @@
 const express = require('express');
 const { Client } = require('pg');
+const cors = require('cors');
 
 const client = new Client({
   user: 'ah7352',
@@ -16,6 +17,8 @@ var app = express()
 app.get('/', function (req, res) {
   res.send('tjena kvinnan')
 });
+
+app.use(cors({origin: '*'}));
 
 // Fetches articles from database
 app.get('/get_articles', async function (req, res) {
@@ -42,8 +45,6 @@ app.get('/new_order/:id', async function (req, res) {
   await client.query('update kvitto set antal = antal + 'FIXA' where orderid='FIXA';')
   await client.query('update produktlagersaldoprisinformation set saldo = saldo - 'FIXA' where produktid='FIXA';')
   await client.query('commit;')
-
-});
 
 
 app.get('/supplier_info', async function (req, res) {

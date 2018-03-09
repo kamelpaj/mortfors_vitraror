@@ -1,5 +1,4 @@
 \set ON_ERROR_STOP on
-\c ah7352
 drop database if exists mortforsvitvaror;
 create database mortforsvitvaror;
 \c mortforsvitvaror;

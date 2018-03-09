@@ -1,26 +1,45 @@
 import React, { Component } from 'react';
 import logo from './MORTFORS.jpg';
 import './App.css';
-
-const getAssortment = () => {
-	const tempAssortmentJSON = [
-		['Kyl', 2, 2500, 'Siemens'],
-		['Frys', 3, 1500, 'Electrolux'],
-		['Dammsugare', 15, 750, 'Damm AB']
-	]
-
-	const assortmentList = (
-		<ul>
-			{tempAssortmentJSON.map((article) => {
-				return (<li>{article}</li>)
-			})}
-		</ul>
-	)
-
-	return assortmentList
-}
+import axios from 'axios';
 
 class App extends Component {
+	constructor() {
+		super();
+
+		this.state = {items: null}
+	}
+
+	componentDidMount() {
+		axios.get('http://localhost:3000/get_articles')
+			.then((resp) => {
+				this.setState({items: resp.data});
+			})
+			.catch(err => {
+				console.log('err', err);
+			});
+	}
+
+	getAssortment() {
+		if(this.state.items === null) {
+			return (<p>Loading</p>)
+		}
+
+		const items = this.state.items;
+		console.log(items);
+
+		const assortmentList = items.map((item) =>
+			<tr key={item.produktid}>
+				<td>{item.produktid}</td>
+				<td>{item.saldo}</td>
+				<td>{item.säljstyckpris}</td>
+				<td>{item.tillverkare}</td>
+			</tr>
+		);
+
+		return <table>{assortmentList}</table>
+	}
+
   render() {
     return (
       <div className="App">
@@ -30,7 +49,7 @@ class App extends Component {
         </header>
 
 				<main>
-					<div>{getAssortment()}</div>
+					<div>{this.getAssortment()}</div>
 				</main>
       </div>
     );

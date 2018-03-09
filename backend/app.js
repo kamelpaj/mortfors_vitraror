@@ -1,11 +1,12 @@
 const express = require('express');
 const { Client } = require('pg');
 const cors = require('cors');
+const uuidv4 = require('uuid/v4');
 
 const client = new Client({
   user: 'ah7352',
   host: 'pgserver.mah.se',
-  database: 'mortforsvitvaror',
+  database: 'mortforsvitvaror3',
   password: 'n52c5oux',
   port: 5432,
 });
@@ -28,24 +29,62 @@ app.get('/get_articles', async function (req, res) {
 });
 
 // Customer registration and ...
-app.get('/new_order/:id', async function (req, res) {
-  var id = req.params.id;
+app.get('/new_order/', async function (req, res) {
+  var personnummer = req.query.personnummer;
+  var namn = req.query.namn;
+  var adress = req.query.adress;
+  var epost = req.query.epost;
+
+  var produktid = req.query.produktid;
+  var antal = req.query.antal;
+  const {rows} = await client.query('select SäljStyckPris from ProduktLagerSaldoPrisInformation where ProduktID=' + produktid + ';')
+  console.log(produktid);
+  console.log(rows[0].säljstyckpris);
+  const säljstyckpris = rows[0].säljstyckpris
+
+  // const {rows} = await client.query(query)
+
+  var orderid = uuidv4();
+  var datum = (new Date()).toISOString().substring(0, 10);
+
+
 
   // Insert into Kundinfo
-  await client.query('insert into Kundinfo values (910102, Kuk Hedlund, Adress, Epost)')
+  await client.query(
+    "insert into Kundinfo values ("
+    + personnummer + ", "
+    + namn + ", "
+    + adress + ', '
+    + epost + ");"
+  );
 
   // Insert into Orders
-  await client.query('insert into Orders values (OrderID, Datum, Personnummer)')
-
-  // Insert into Kvitto
-  await client.query('insert into Kvitto values (OrderID, ProduktID, SäljStyckPris, Antal)')
-
+  console.log('orderid', orderid);
+  await client.query(
+    "insert into Orders values ("
+    + orderid + ", "
+    + datum + ", "
+    + personnummer + ");"
+  );
+  //
+  // // Insert into Kvitto
+  // await client.query(
+  //   'insert into Kvitto values ('
+  //   + orderid + ', '
+  //   + produktid + ', '
+  //   + säljstyckpris + ', '
+  //   + antal + ');'
+  // );
+  //
   // Transaction between Kvitto and ProduktLagerSaldoPrisInformation
-  await client.query('begin;')
-  await client.query('update kvitto set antal = antal + 'FIXA' where orderid='FIXA';')
-  await client.query('update produktlagersaldoprisinformation set saldo = saldo - 'FIXA' where produktid='FIXA';')
-  await client.query('commit;')
+  // await client.query('begin;')
+  // await client.query('update kvitto set antal = antal + 'FIXA' where orderid='FIXA';')
+  // await client.query('update produktlagersaldoprisinformation set saldo = saldo - 'FIXA' where produktid='FIXA';')
+  // await client.query('commit;')
 
+  res.send("uDUNno");
+
+})
 
 app.get('/supplier_info', async function (req, res) {
   const {rows} = await client.query('select * from LeverantörsInformation')

@@ -1,7 +1,7 @@
 \set ON_ERROR_STOP on
-drop database if exists mortforsvitvaror;
-create database mortforsvitvaror;
-\c mortforsvitvaror;
+drop database if exists mortforsvitvaror3;
+create database mortforsvitvaror3;
+\c mortforsvitvaror3;
 revoke all privileges on database mortforsvitvaror from public;
 
 
@@ -43,7 +43,7 @@ create table Kundinfo (
 );
 
 create table Orders (
-  OrderID int,
+  OrderID serial,
   Datum date,
   Personnummer int,
 
@@ -53,7 +53,7 @@ create table Orders (
 
 
 create table Kvitto (
-  OrderID int,
+  OrderID serial,
   ProduktID varchar,
   SäljStyckpris int,
   Antal int,
@@ -65,28 +65,28 @@ create table Kvitto (
 
 
 insert into LeverantörsInformation values
-  ('Elgiganten', 031149193, 'elgiganten.se'),
-  ('SIBA', 042238744, 'siba.se'),
-  ('Flugsvamp', null, 'flugsvampoFJfddJg2245G.onion');
+  ('elgiganten', 031149193, 'elgiganten.se'),
+  ('siba', 042238744, 'siba.se'),
+  ('flugsvamp', null, 'flugsvampoFJfddJg2245G.onion');
 
 insert into ProduktLagerSaldoPrisInformation values
-  ('Kylskåp', 2, 2500),
-  ('Tvättmaskin', 12, 3000),
-  ('Cannabis edibles', 420, 42);
+  ('kylskåp', 2, 2500),
+  ('tvättmaskin', 12, 3000),
+  ('cannabis edibles', 420, 42);
 
 insert into ProduktInköpsInformation values
-  ('Elgiganten', 'Kylskåp', 'Siemens', 2000),
-  ('SIBA', 'Kylskåp', 'Siemens', 1900),
-  ('Flugsvamp', 'Cannabis edibles', null, 420);
+  ('elgiganten', 'kylskåp', 'siemens', 2000),
+  ('siba', 'kylskåp', 'siemens', 1900),
+  ('flugsvamp', 'cannabis edibles', null, 420);
 
 insert into Kundinfo values
-  (940419, 'Adam Hermansson', 'Östra Promenaden 23', 'haha@kuk.se'),
-  (930712, 'Stiffe von Piffe', 'Duvetvart 00', 'ayy@lmao.lol');
+  (940419, 'adam hermansson', 'östra promenaden 23', 'haha@kuk.se'),
+  (930712, 'stiffe von piffe', 'duvetvart 00', 'ayy@lmao.lol');
 
 insert into Orders values
-  (001, '2018-01-03', 940419),
-  (002, '2018-02-20', 930712);
+  (DEFAULT, '2018-01-03', 940419),
+  (DEFAULT, '2018-02-20', 930712);
 
 insert into Kvitto values
-  (001, 'Tvättmaskin', 3100, 2),
-  (002, 'Cannabis edibles', 420, 5);
+  (DEFAULT, 'tvättmaskin', 3100, 2),
+  (DEFAULT, 'cannabis edibles', 420, 5);

@@ -8,7 +8,7 @@ const client = new Client({
   password: 'n52c5oux',
   port: 5432,
 });
-client.connect();
+console.log(client.connect());
 
 
 var app = express()
@@ -19,22 +19,17 @@ app.get('/', function (req, res) {
 
 // Fetches articles from database
 app.get('/get_articles', async function (req, res) {
-  const {articles} = await client.query('select distinct ProduktLagerSaldoPrisInformation.produktid, ProduktLagerSaldoPrisInformation.saldo, ProduktLagerSaldoPrisInformation.säljstyckpris, ProduktInköpsInformation.tillverkare from produktlagersaldoprisinformation inner join produktinköpsinformation on produktlagersaldoprisinformation.produktid=produktinköpsinformation.produktid;')
-  console.log(articles);
-  res.send(articles);
+  const {rows} = await client.query('select distinct ProduktLagerSaldoPrisInformation.produktid, ProduktLagerSaldoPrisInformation.saldo, ProduktLagerSaldoPrisInformation.säljstyckpris, ProduktInköpsInformation.tillverkare from produktlagersaldoprisinformation inner join produktinköpsinformation on produktlagersaldoprisinformation.produktid=produktinköpsinformation.produktid;')
+  console.log(rows);
+
+  res.send(rows);
 });
 
+// app.post('/new_order', async function (req, res) {
+//   const {  }
+// });
 
 
 app.listen(3000, function(){
   console.log("Serverbrush mkt fet bomshakalak!");
 });
-
-
-// client.query('select * from anstalld;', function(err, res) {
-//   console.log(err, res);
-//   client.end();
-// });
-
-// const text = 'SELECT * from PROJEKT';
-// window.text = text;

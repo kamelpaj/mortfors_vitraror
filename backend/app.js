@@ -1,5 +1,7 @@
 const express = require('express');
 const { Client } = require('pg');
+const cors = require('cors');
+
 
 const client = new Client({
   user: 'ah7352',
@@ -17,14 +19,14 @@ app.get('/', function (req, res) {
   res.send('tjena kvinnan')
 });
 
+app.use(cors({origin: '*'}));
+
 // Fetches articles from database
 app.get('/get_articles', async function (req, res) {
-  const {articles} = await client.query('select distinct ProduktLagerSaldoPrisInformation.produktid, ProduktLagerSaldoPrisInformation.saldo, ProduktLagerSaldoPrisInformation.säljstyckpris, ProduktInköpsInformation.tillverkare from produktlagersaldoprisinformation inner join produktinköpsinformation on produktlagersaldoprisinformation.produktid=produktinköpsinformation.produktid;')
-  console.log(articles);
-  res.send(articles);
+  const {rows} = await client.query('select distinct ProduktLagerSaldoPrisInformation.produktid, ProduktLagerSaldoPrisInformation.saldo, ProduktLagerSaldoPrisInformation.säljstyckpris, ProduktInköpsInformation.tillverkare from produktlagersaldoprisinformation inner join produktinköpsinformation on produktlagersaldoprisinformation.produktid=produktinköpsinformation.produktid;')
+  console.log(rows);
+  res.send(rows);
 });
-
-
 
 app.listen(3000, function(){
   console.log("Serverbrush mkt fet bomshakalak!");

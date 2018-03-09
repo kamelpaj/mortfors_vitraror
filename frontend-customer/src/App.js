@@ -6,12 +6,11 @@ import axios from 'axios';
 class App extends Component {
 	constructor() {
 		super();
-
 		this.state = {items: null}
 	}
 
 	componentDidMount() {
-		axios.get('http://localhost:3000/get_articles')
+		axios.get('http://192.168.0.37:3000/get_articles')
 			.then((resp) => {
 				this.setState({items: resp.data});
 			})
@@ -37,7 +36,19 @@ class App extends Component {
 			</tr>
 		);
 
-		return <table>{assortmentList}</table>
+		return (
+			<table>
+				<tbody>
+					<tr>
+						<th>Produkt</th>
+						<th>Saldo</th>
+						<th>Pris</th>
+						<th>Tillverkare</th>
+					</tr>
+					{assortmentList}
+				</tbody>
+			</table>
+		)
 	}
 
   render() {

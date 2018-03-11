@@ -13,6 +13,20 @@ main {
 	margin: auto;
 }
 
+.New-order {
+	padding-top: 100px;
+	width: 500px;
+	margin: auto;
+}
+
+label {
+	display: block;
+}
+
+button {
+	display: block;
+}
+
 .App-header {
   background-color: #222;
   height: 200px;

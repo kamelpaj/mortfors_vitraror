@@ -10,7 +10,7 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		axios.get('http://192.168.0.37:3000/get_articles')
+		axios.get('http://localhost:3000/get_articles')
 			.then((resp) => {
 				this.setState({items: resp.data});
 			})

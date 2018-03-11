@@ -44,7 +44,7 @@ app.get('/new_order/', async function (req, res) {
 
   // const {rows} = await client.query(query)
 
-  var orderid = uuidv4();
+  var orderid = Math.floor(Math.random() * 1000000);
   var datum = (new Date()).toISOString().substring(0, 10);
 
 
@@ -59,22 +59,23 @@ app.get('/new_order/', async function (req, res) {
   );
 
   // Insert into Orders
-  console.log('orderid', orderid);
+  console.log('datum', datum);
+	console.log('datum type', typeof(datum));
   await client.query(
-    "insert into Orders values ("
-    + orderid + ", "
-    + datum + ", "
+    "insert into Orders values ('"
+    + orderid + "', '"
+    + datum + "', "
     + personnummer + ");"
   );
-  //
-  // // Insert into Kvitto
-  // await client.query(
-  //   'insert into Kvitto values ('
-  //   + orderid + ', '
-  //   + produktid + ', '
-  //   + säljstyckpris + ', '
-  //   + antal + ');'
-  // );
+
+  // Insert into Kvitto
+  await client.query(
+    "insert into Kvitto values ('"
+    + orderid + "', '"
+    + produktid + "', "
+    + säljstyckpris + ", "
+    + antal + ");"
+  );
   //
   // Transaction between Kvitto and ProduktLagerSaldoPrisInformation
   // await client.query('begin;')

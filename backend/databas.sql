@@ -43,7 +43,7 @@ create table Kundinfo (
 );
 
 create table Orders (
-  OrderID serial,
+  OrderID varchar,
   Datum date,
   Personnummer int,
 
@@ -53,7 +53,7 @@ create table Orders (
 
 
 create table Kvitto (
-  OrderID serial,
+  OrderID varchar,
   ProduktID varchar,
   SäljStyckpris int,
   Antal int,
@@ -84,9 +84,9 @@ insert into Kundinfo values
   (930712, 'stiffe von piffe', 'duvetvart 00', 'ayy@lmao.lol');
 
 insert into Orders values
-  (DEFAULT, '2018-01-03', 940419),
-  (DEFAULT, '2018-02-20', 930712);
+  ('1', '2018-01-03', 940419),
+  ('2', '2018-02-20', 930712);
 
 insert into Kvitto values
-  (DEFAULT, 'tvättmaskin', 3100, 2),
-  (DEFAULT, 'cannabis edibles', 420, 5);
+  ('1', 'tvättmaskin', 3100, 2),
+  ('2', 'cannabis edibles', 420, 5);

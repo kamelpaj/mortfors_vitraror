@@ -51,6 +51,15 @@ button {
 	margin: 50px auto;
 }
 
+.Search-wrapper {
+	width: 500px;
+	margin: 50px auto;
+}
+
+.Search-field {
+	width: 100%;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

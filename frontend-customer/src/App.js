@@ -62,11 +62,26 @@ class App extends Component {
         </header>
 
 				<main>
-					<div className="Assortment-list">{this.getAssortment()}</div>
+					<div className="Search-wrapper">
+						<form
+							method="GET"
+							action="http://localhost:3000/search"
+						>
+							<input
+								type="text"
+								name="search"
+								placeholder="Sök efter produkt"
+								className="Search-field"
+							/>
+						</form>
+					</div>
+
+					<div
+						className="Assortment-list">{this.getAssortment()}</div>
 
 					<div className="New-order">
 						<h3>Lägg en ny order då</h3>
-						<form method="GET" action="http://192.168.0.37:3000/new_order">
+						<form method="GET" action="http://localhost:3000/new_order">
 							<label>Personnummer:</label>
 							<input type="text" name="personnummer" />
 

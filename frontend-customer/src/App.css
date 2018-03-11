@@ -14,9 +14,8 @@ main {
 }
 
 .New-order {
-	padding-top: 100px;
 	width: 500px;
-	margin: auto;
+	margin: 50px auto;
 }
 
 label {
@@ -34,12 +33,22 @@ button {
   color: white;
 }
 
+.App-header-wrapper {
+	width: 500px;
+	margin: auto;
+}
+
 .App-title {
   font-size: 1.5em;
 }
 
 .App-intro {
   font-size: large;
+}
+
+.Assortment-list {
+	width: 500px;
+	margin: 50px auto;
 }
 
 @keyframes App-logo-spin {

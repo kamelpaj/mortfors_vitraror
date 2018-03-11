@@ -55,38 +55,40 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Välkommen till Mörtfors vitvaror</h1>
+					<div className="App-header-wrapper">
+	          <img src={logo} className="App-logo" alt="logo" />
+	          <h1 className="App-title">Välkommen till Mörtfors vitvaror</h1>
+					</div>
         </header>
 
 				<main>
-					<div>{this.getAssortment()}</div>
+					<div className="Assortment-list">{this.getAssortment()}</div>
+
+					<div className="New-order">
+						<h3>Lägg en ny order då</h3>
+						<form method="GET" action="http://192.168.0.37:3000/new_order">
+							<label>Personnummer:</label>
+							<input type="text" name="personnummer" />
+
+							<label>Namn:</label>
+							<input type="text" name="namn"/>
+
+							<label>Adress:</label>
+							<input type="text" name="adress"/>
+
+							<label>Epost:</label>
+							<input type="email" name="epost"/>
+
+							<label>ProduktID:</label>
+							<input type="text" name="produktid"/>
+
+							<label>Antal:</label>
+							<input type="text" name="antal"/>
+
+							<button>Skicka!</button>
+						</form>
+					</div>
 				</main>
-
-				<div className="New-order">
-					<h3>Lägg en ny order då</h3>
-					<form method="GET" action="http://192.168.0.37:3000/new_order">
-						<label>Personnummer:</label>
-						<input type="text" name="personnummer" />
-
-						<label>Namn:</label>
-						<input type="text" name="namn"/>
-
-						<label>Adress:</label>
-						<input type="text" name="adress"/>
-
-						<label>Epost:</label>
-						<input type="email" name="epost"/>
-
-						<label>ProduktID:</label>
-						<input type="text" name="produktid"/>
-
-						<label>Antal:</label>
-						<input type="text" name="antal"/>
-
-						<button>Skicka!</button>
-					</form>
-				</div>
       </div>
     );
   }

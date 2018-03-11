@@ -21,6 +21,14 @@ app.get('/', function (req, res) {
 
 app.use(cors({origin: '*'}));
 
+// Searches for a product with user input from front-end
+app.get('/search', async function (req, res) {
+  var search = req.query.search;
+  const {rows} = await client.query("select distinct ProduktLagerSaldoPrisInformation.produktid, ProduktLagerSaldoPrisInformation.saldo, ProduktLagerSaldoPrisInformation.säljstyckpris, ProduktInköpsInformation.tillverkare from produktlagersaldoprisinformation inner join produktinköpsinformation on produktlagersaldoprisinformation.produktid=produktinköpsinformation.produktid where ProduktLagerSaldoPrisInformation.produktid='"+search+"' or ProduktInköpsInformation.tillverkare='"+search+"';")
+  console.log(rows);
+});
+
+
 // Fetches articles from database
 app.get('/get_articles', async function (req, res) {
   const {rows} = await client.query('select distinct ProduktLagerSaldoPrisInformation.produktid, ProduktLagerSaldoPrisInformation.saldo, ProduktLagerSaldoPrisInformation.säljstyckpris, ProduktInköpsInformation.tillverkare from produktlagersaldoprisinformation inner join produktinköpsinformation on produktlagersaldoprisinformation.produktid=produktinköpsinformation.produktid;')

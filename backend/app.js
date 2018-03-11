@@ -37,7 +37,7 @@ app.get('/new_order/', async function (req, res) {
 
   var produktid = req.query.produktid;
   var antal = req.query.antal;
-  const {rows} = await client.query('select SäljStyckPris from ProduktLagerSaldoPrisInformation where ProduktID=' + produktid + ';')
+  const {rows} = await client.query("select SäljStyckPris from ProduktLagerSaldoPrisInformation where ProduktID='" + produktid + "';")
   console.log(produktid);
   console.log(rows[0].säljstyckpris);
   const säljstyckpris = rows[0].säljstyckpris
@@ -52,10 +52,10 @@ app.get('/new_order/', async function (req, res) {
   // Insert into Kundinfo
   await client.query(
     "insert into Kundinfo values ("
-    + personnummer + ", "
-    + namn + ", "
-    + adress + ', '
-    + epost + ");"
+    + personnummer + ", '"
+    + namn + "', '"
+    + adress + "', '"
+    + epost + "');"
   );
 
   // Insert into Orders
@@ -76,7 +76,8 @@ app.get('/new_order/', async function (req, res) {
     + säljstyckpris + ", "
     + antal + ");"
   );
-  //
+
+	// TODO:
   // Transaction between Kvitto and ProduktLagerSaldoPrisInformation
   // await client.query('begin;')
   // await client.query('update kvitto set antal = antal + 'FIXA' where orderid='FIXA';')

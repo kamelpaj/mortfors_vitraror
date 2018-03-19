@@ -88,10 +88,10 @@ app.get('/new_order/', async function (req, res) {
 
 	// TODO:
   // Transaction between Kvitto and ProduktLagerSaldoPrisInformation
-  // await client.query('begin;')
-  // await client.query('update kvitto set antal = antal + 'FIXA' where orderid='FIXA';')
-  // await client.query('update produktlagersaldoprisinformation set saldo = saldo - 'FIXA' where produktid='FIXA';')
-  // await client.query('commit;')
+  await client.query('begin;')
+  await client.query('update kvitto set antal = ' + antal + ' where orderid=' + orderid + ';')
+  await client.query("update produktlagersaldoprisinformation set saldo = saldo - "+ antal +" where produktid='"+ produktid +"';")
+  await client.query('commit;')
 
   res.send("uDUNno");
 

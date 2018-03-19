@@ -7,16 +7,17 @@ class App extends Component {
 	constructor() {
 		super();
 		this.state = {items: null}
+
+		axios.get('http://localhost:3000/get_articles')
+		.then((resp) => {
+			this.setState({items: resp.data});
+		})
+		.catch(err => {
+			console.log('err', err);
+		});
 	}
 
 	componentDidMount() {
-		axios.get('http://localhost:3000/get_articles')
-			.then((resp) => {
-				this.setState({items: resp.data});
-			})
-			.catch(err => {
-				console.log('err', err);
-			});
 	}
 
 	getAssortment() {
@@ -25,7 +26,6 @@ class App extends Component {
 		}
 
 		const items = this.state.items;
-		console.log(items);
 
 		const assortmentList = items.map((item) =>
 			<tr key={item.produktid}>
@@ -51,6 +51,18 @@ class App extends Component {
 		)
 	}
 
+	handleKeyPress = (event) => {
+	  if(event.key === 'Enter'){
+	    const submitValue = document.getElementById("search-field").value
+			axios.get("http://localhost:3000/search?search="+submitValue)
+				.then((resp) => {
+					const newState = this.state
+					newState["items"] = resp.data
+					this.setState(newState)
+				})
+	  }
+	}
+
   render() {
     return (
       <div className="App">
@@ -63,21 +75,19 @@ class App extends Component {
 
 				<main>
 					<div className="Search-wrapper">
-						<form
-							method="GET"
-							action="http://localhost:3000/search"
-						>
-							<input
-								type="text"
-								name="search"
-								placeholder="Sök efter produkt"
-								className="Search-field"
-							/>
-						</form>
+						<input
+							type="text"
+							name="search"
+							placeholder="Sök efter produkt"
+							className="Search-field"
+							onKeyPress={(event) => {this.handleKeyPress(event)}}
+							id="search-field"
+						/>
 					</div>
 
 					<div
-						className="Assortment-list">{this.getAssortment()}</div>
+						className="Assortment-list">{this.getAssortment()}
+					</div>
 
 					<div className="New-order">
 						<h3>Lägg en ny order då</h3>

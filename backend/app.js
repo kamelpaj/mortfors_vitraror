@@ -103,6 +103,9 @@ app.get('/supplier_info', async function (req, res) {
   res.send(rows);
 });
 
+app.get('/kvitto', async function (req, res) {
+  const {rows} = await client.query("select kvitto.produktid, kvitto.antal, orders.datum, kvitto.säljstyckpris, kvitto.orderid from kvitto inner join orders on orders.orderid=kvitto.orderid;")
+})
 
 app.listen(3000, function(){
   console.log("Serverbrush mkt fet bomshakalak!");
